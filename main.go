@@ -17,7 +17,7 @@ func init() {
 	r := gin.Default()
 
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"https://characters.juliandavid.me", "http://localhost:3098", "https://characters-stage.juliandavid.me"}
+	config.AllowOrigins = []string{"https://characters.juliandavid.co", "http://localhost:3098", "https://characters-stage.juliandavid.co"}
 	config.AllowHeaders = append(config.AllowHeaders, "Authorization")
 
 	r.Use(cors.New(config))

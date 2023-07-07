@@ -14,13 +14,13 @@ zip main.zip main &&
 rm main &&
 
 if [[ "$tag" == "prod" ]]; then
-    tag=""
+    tag="-prod"
 fi
 
 if [[ "$tag" == "stage" ]]; then
     tag="-stage"
 fi
 
-aws lambda update-function-code --function-name go-serverless$tag --zip-file fileb://main.zip > /dev/null 2>&1 &&
+aws lambda update-function-code --function-name favorite-characters$tag --zip-file fileb://main.zip > /dev/null 2>&1 &&
 
 rm main.zip
