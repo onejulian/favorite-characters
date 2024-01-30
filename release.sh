@@ -9,19 +9,17 @@ elif [[ "$tag" != "stage" && "$tag" != "prod" ]]; then
     exit 1
 fi
 
-go mod init favorite-characters && go mod tidy &&
-GOOS=linux GOARCH=amd64 go build -o main &&
+go mod tidy &&
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-extldflags "-static"' -o main &&
 zip main.zip main &&
-rm main &&
+rm main
 
 if [[ "$tag" == "prod" ]]; then
     tag="-prod"
-fi
-
-if [[ "$tag" == "stage" ]]; then
+elif [[ "$tag" == "stage" ]]; then
     tag="-stage"
 fi
 
-aws lambda update-function-code --function-name favorite-characters$tag --zip-file fileb://main.zip > /dev/null 2>&1 &&
+aws lambda update-function-code --function-name favorite-characters$tag --zip-file fileb://main.zip
 
 rm main.zip
