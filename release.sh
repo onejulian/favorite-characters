@@ -9,6 +9,7 @@ elif [[ "$tag" != "stage" && "$tag" != "prod" ]]; then
     exit 1
 fi
 
+go mod init favorite-characters && go mod tidy &&
 GOOS=linux GOARCH=amd64 go build -o main &&
 zip main.zip main &&
 rm main &&
