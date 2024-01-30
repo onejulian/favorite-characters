@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+    
     - name: Configurar AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
