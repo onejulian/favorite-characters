@@ -1,10 +1,10 @@
 package view
 
 import (
-	"mbs-back/src/domain"
-	"mbs-back/src/infraestructure/jwt"
-	"mbs-back/src/usecase"
-	"mbs-back/src/view/req"
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/jwt"
+	"favorite-characters/src/usecase"
+	"favorite-characters/src/view/req"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go/aws"

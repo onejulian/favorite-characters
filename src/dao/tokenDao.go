@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"mbs-back/src/domain"
+	"favorite-characters/src/domain"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"

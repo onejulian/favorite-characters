@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"mbs-back/src/domain"
+	"favorite-characters/src/domain"
 )
 
 func TokenIsValid(email, tokenString string) bool {

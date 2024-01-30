@@ -1,6 +1,6 @@
 package usecase
 
-import "mbs-back/src/domain"
+import "favorite-characters/src/domain"
 
 type AddCharacterUseCase struct {
 }

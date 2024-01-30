@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"errors"
-	"mbs-back/src/domain"
-	"mbs-back/src/infraestructure/jwt"
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/jwt"
 	"net/http"
 )
 

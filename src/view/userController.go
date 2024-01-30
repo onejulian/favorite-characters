@@ -1,9 +1,9 @@
 package view
 
 import (
-	"mbs-back/src/domain"
-	"mbs-back/src/infraestructure/jwt"
-	"mbs-back/src/usecase"
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/jwt"
+	"favorite-characters/src/usecase"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go/aws"

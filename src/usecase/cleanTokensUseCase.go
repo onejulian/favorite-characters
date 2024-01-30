@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"mbs-back/src/domain"
-	"mbs-back/src/infraestructure/jwt"
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/jwt"
 )
 
 func cleanTokens(email string) error {

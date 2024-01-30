@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"mbs-back/src/dao"
-	"mbs-back/src/domain"
+	"favorite-characters/src/dao"
+	"favorite-characters/src/domain"
 	"os"
 )
 

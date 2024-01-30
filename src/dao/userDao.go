@@ -2,9 +2,9 @@ package dao
 
 import (
 	"errors"
-	"mbs-back/src/domain"
-	"mbs-back/src/infraestructure/jwt"
-	"mbs-back/src/infraestructure/util"
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/jwt"
+	"favorite-characters/src/infraestructure/util"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -179,7 +179,7 @@ func (u *UserDao) ChangePassword(email string, password string) error {
 	}
 
 	currentUser.Password = password
-	
+
 	input := &dynamodb.UpdateItemInput{
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
 			":p": {

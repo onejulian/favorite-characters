@@ -1,8 +1,8 @@
 package main
 
 import (
-	"mbs-back/src/infraestructure/jwt"
-	"mbs-back/src/view"
+	"favorite-characters/src/infraestructure/jwt"
+	"favorite-characters/src/view"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
