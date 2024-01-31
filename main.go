@@ -3,7 +3,6 @@ package main
 import (
 	"favorite-characters/src/infraestructure/jwt"
 	"favorite-characters/src/view"
-	"fmt"
 	"os"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -47,7 +46,6 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 func main() {
 	if runningInLambda() {
-		fmt.Println("Running in Lambda")
 		lambda.Start(handler)
 	} else {
 		if r != nil {
