@@ -3,11 +3,13 @@ package dao
 import (
 	"errors"
 	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/env"
 	"favorite-characters/src/infraestructure/jwt"
 	"favorite-characters/src/infraestructure/util"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
@@ -34,10 +36,21 @@ func NewUserDao(tableName string) *UserDao {
 }
 
 func initDynaClient() dynamodbiface.DynamoDBAPI {
+	env.LoadEnv()
 	region := os.Getenv("AWS_REGION")
+	is_local := os.Getenv("LOCAL")
 
-	awsSession, err := session.NewSession(&aws.Config{
-		Region: aws.String(region)})
+	config := &aws.Config{
+		Region: aws.String(region),
+	}
+
+	if is_local == "1" {
+		awsAccessKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
+		awsSecretAccessKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
+		config.Credentials = credentials.NewStaticCredentials(awsAccessKeyID, awsSecretAccessKey, "")
+	}
+
+	awsSession, err := session.NewSession(config)
 	if err != nil {
 		return nil
 	}

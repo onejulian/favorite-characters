@@ -3,6 +3,8 @@ package main
 import (
 	"favorite-characters/src/infraestructure/jwt"
 	"favorite-characters/src/view"
+	"fmt"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -12,9 +14,10 @@ import (
 )
 
 var ginLambda *ginadapter.GinLambda
+var r *gin.Engine
 
 func init() {
-	r := gin.Default()
+	r = gin.Default()
 
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"https://characters.juliandavid.co", "http://localhost:3098", "https://characters-stage.juliandavid.co"}
@@ -43,5 +46,17 @@ func handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 }
 
 func main() {
-	lambda.Start(handler)
+	if runningInLambda() {
+		fmt.Println("Running in Lambda")
+		lambda.Start(handler)
+	} else {
+		if r != nil {
+			r.Run(":8080")
+		}
+	}
+}
+
+func runningInLambda() bool {
+	_, exists := os.LookupEnv("AWS_LAMBDA_RUNTIME_API")
+	return exists
 }

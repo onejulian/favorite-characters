@@ -27,6 +27,10 @@ jobs:
         go-version: '1.21'
 
     - name: Ejecutar pruebas unitarias
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-2
       run: go test ./...
 
     - name: Ejecutar script de despliegue para prod
@@ -52,6 +56,10 @@ jobs:
         go-version: '1.21'
 
     - name: Ejecutar pruebas unitarias
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-2
       run: go test ./...
 
     - name: Ejecutar script de despliegue para stage
