@@ -26,6 +26,9 @@ jobs:
       with:
         go-version: '1.21'
 
+    - name: Ejecutar pruebas unitarias
+      run: go test ./...
+
     - name: Ejecutar script de despliegue para prod
       run: bash release.sh prod
 
@@ -47,6 +50,9 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: '1.21'
+
+    - name: Ejecutar pruebas unitarias
+      run: go test ./...
 
     - name: Ejecutar script de despliegue para stage
       run: bash release.sh stage
