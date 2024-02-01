@@ -29,7 +29,7 @@ func init() {
 	default:
 		stage := addStage()
 		UserRepo = dynamodbDao.NewUserDao("users" + stage)
-		CharacterRepo = dynamodbDao.NewCharacterDao("users" + stage)
+		CharacterRepo = dynamodbDao.NewCharacterDao("users_favorites" + stage)
 		TokenRepo = dynamodbDao.NewTokenDao("tokens" + stage)
 	}
 }
