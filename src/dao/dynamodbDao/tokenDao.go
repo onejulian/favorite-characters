@@ -1,7 +1,8 @@
-package dao
+package dynamodbdao
 
 import (
 	"favorite-characters/src/domain"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -16,7 +17,7 @@ type TokenDao struct {
 func NewTokenDao(tableName string) *TokenDao {
 	return &TokenDao{
 		tableName:  tableName,
-		dynaClient: client,
+		dynaClient: dbconfig.Client,
 	}
 }
 
@@ -89,8 +90,6 @@ func (t *TokenDao) FindByEmail(userEmail string) (*[]domain.Token, error) {
 		}
 		tokens = append(tokens, token)
 	}
-
-	// fmt.Println(tokens)
 
 	return &tokens, nil
 }

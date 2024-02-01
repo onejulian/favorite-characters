@@ -4,13 +4,14 @@ import (
 	"errors"
 	"favorite-characters/src/domain"
 	"favorite-characters/src/infraestructure/jwt"
+	"favorite-characters/src/infraestructure/repository"
 	"net/http"
 )
 
 type LoginUseCase struct{}
 
 func (useCase *LoginUseCase) Execute(email, password string) (jwt.ResponseLogin, error) {
-	user, err := domain.GetUser(email, userRepo)
+	user, err := domain.GetUser(email, repository.UserRepo)
 	if err != nil {
 		return jwt.ResponseLogin{
 			Code: http.StatusNotFound,
@@ -37,7 +38,7 @@ func (useCase *LoginUseCase) Execute(email, password string) (jwt.ResponseLogin,
 		Value:     token,
 	}
 
-	_, err = domain.CreateToken(tokenStr, tokenRepo)
+	_, err = domain.CreateToken(tokenStr, repository.TokenRepo)
 	if err != nil {
 		return jwt.ResponseLogin{
 			Code: http.StatusInternalServerError,

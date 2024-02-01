@@ -1,17 +1,14 @@
-package dao
+package dynamodbdao
 
 import (
 	"errors"
 	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/constants"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
-)
-
-var (
-	ErrorCharacterAlreadyExists = "el personaje ya existe"
-	ErrorCharacterNotFound      = "personaje no encontrado"
 )
 
 type CharacterDao struct {
@@ -22,14 +19,14 @@ type CharacterDao struct {
 func NewCharacterDao(tableName string) *CharacterDao {
 	return &CharacterDao{
 		tableName:  tableName,
-		dynaClient: client,
+		dynaClient: dbconfig.Client,
 	}
 }
 
 func (c *CharacterDao) Create(character domain.Character) (*domain.Character, error) {
 	currentCharacter, _ := c.CharacterExists(character.UserEmail, character.IdCharacter)
 	if currentCharacter {
-		return nil, errors.New(ErrorCharacterAlreadyExists)
+		return nil, errors.New(constants.ErrorCharacterAlreadyExists)
 	}
 
 	input := &dynamodb.PutItemInput{
@@ -55,7 +52,7 @@ func (c *CharacterDao) Create(character domain.Character) (*domain.Character, er
 func (c *CharacterDao) Delete(userEmail string, idCharacter string) error {
 	currentCharacter, _ := c.CharacterExists(userEmail, idCharacter)
 	if !currentCharacter {
-		return errors.New(ErrorCharacterNotFound)
+		return errors.New(constants.ErrorCharacterNotFound)
 	}
 
 	input := &dynamodb.DeleteItemInput{

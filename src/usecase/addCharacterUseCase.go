@@ -1,6 +1,9 @@
 package usecase
 
-import "favorite-characters/src/domain"
+import (
+	"favorite-characters/src/domain"
+	"favorite-characters/src/infraestructure/repository"
+)
 
 type AddCharacterUseCase struct {
 }
@@ -9,5 +12,5 @@ func (a *AddCharacterUseCase) Execute(userEmail string, idCharacter string) (*do
 	return domain.CreateCharacter(domain.Character{
 		UserEmail:   userEmail,
 		IdCharacter: idCharacter,
-	}, characterRepo)
+	}, repository.CharacterRepo)
 }

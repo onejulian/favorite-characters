@@ -1,26 +1,17 @@
-package dao
+package dynamodbdao
 
 import (
 	"errors"
 	"favorite-characters/src/domain"
-	"favorite-characters/src/infraestructure/env"
+	"favorite-characters/src/infraestructure/constants"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
 	"favorite-characters/src/infraestructure/jwt"
 	"favorite-characters/src/infraestructure/util"
-	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
-)
-
-var (
-	ErrorInvalidEmail      = "email inválido"
-	ErrorUserAlreadyExists = "el usuario ya existe"
-	ErrorUserNotFound      = "usuario no encontrado"
-	client                 = initDynaClient()
 )
 
 type UserDao struct {
@@ -31,42 +22,19 @@ type UserDao struct {
 func NewUserDao(tableName string) *UserDao {
 	return &UserDao{
 		tableName:  tableName,
-		dynaClient: client,
+		dynaClient: dbconfig.Client,
 	}
-}
-
-func initDynaClient() dynamodbiface.DynamoDBAPI {
-	env.LoadEnv()
-	region := os.Getenv("AWS_REGION")
-	is_local := os.Getenv("LOCAL")
-
-	config := &aws.Config{
-		Region: aws.String(region),
-	}
-
-	if is_local == "1" {
-		awsAccessKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
-		awsSecretAccessKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
-		config.Credentials = credentials.NewStaticCredentials(awsAccessKeyID, awsSecretAccessKey, "")
-	}
-
-	awsSession, err := session.NewSession(config)
-	if err != nil {
-		return nil
-	}
-
-	return dynamodb.New(awsSession)
 }
 
 func (u *UserDao) Create(user domain.User) (*domain.User, error) {
 	user.IsActive = true
 	if !util.IsEmailValid(user.Email) {
-		return nil, errors.New(ErrorInvalidEmail)
+		return nil, errors.New(constants.ErrorInvalidEmail)
 	}
 
 	currentUser, _ := u.FindByEmail(user.Email)
 	if currentUser != nil {
-		return nil, errors.New(ErrorUserAlreadyExists)
+		return nil, errors.New(constants.ErrorUserAlreadyExists)
 	}
 
 	input := &dynamodb.PutItemInput{
@@ -101,7 +69,7 @@ func (u *UserDao) Create(user domain.User) (*domain.User, error) {
 func (u *UserDao) Update(user domain.User) (*domain.User, error) {
 	currentUser, _ := u.FindByEmail(user.Email)
 	if currentUser == nil {
-		return nil, errors.New(ErrorUserNotFound)
+		return nil, errors.New(constants.ErrorUserNotFound)
 	}
 
 	input := &dynamodb.UpdateItemInput{
@@ -137,7 +105,7 @@ func (u *UserDao) Update(user domain.User) (*domain.User, error) {
 func (u *UserDao) Delete(email string) error {
 	currentUser, _ := u.FindByEmail(email)
 	if currentUser == nil {
-		return errors.New(ErrorUserNotFound)
+		return errors.New(constants.ErrorUserNotFound)
 	}
 
 	input := &dynamodb.DeleteItemInput{
@@ -179,7 +147,7 @@ func (u *UserDao) FindByEmail(email string) (*domain.User, error) {
 	}
 
 	if len(user.Email) == 0 {
-		return nil, errors.New(ErrorUserNotFound)
+		return nil, errors.New(constants.ErrorUserNotFound)
 	}
 
 	return user, nil
@@ -188,7 +156,7 @@ func (u *UserDao) FindByEmail(email string) (*domain.User, error) {
 func (u *UserDao) ChangePassword(email string, password string) error {
 	currentUser, _ := u.FindByEmail(email)
 	if currentUser == nil {
-		return errors.New(ErrorUserNotFound)
+		return errors.New(constants.ErrorUserNotFound)
 	}
 
 	currentUser.Password = password

@@ -1,4 +1,4 @@
-package dynamo_test
+package db_test
 
 import (
 	"favorite-characters/src/domain"
