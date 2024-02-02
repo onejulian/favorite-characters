@@ -4,7 +4,7 @@ import (
 	"errors"
 	"favorite-characters/src/domain"
 	"favorite-characters/src/infraestructure/constants"
-	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamoconfig"
 	"favorite-characters/src/infraestructure/jwt"
 	"favorite-characters/src/infraestructure/util"
 

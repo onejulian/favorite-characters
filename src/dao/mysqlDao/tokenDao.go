@@ -1,9 +1,9 @@
-package postgresqldao
+package mysqldao
 
 import (
 	"errors"
 	"favorite-characters/src/domain"
-	dbconfig "favorite-characters/src/infraestructure/dbconfig/postgres"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/mysqlconfig"
 
 	"gorm.io/gorm"
 )

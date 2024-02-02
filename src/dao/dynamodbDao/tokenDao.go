@@ -2,7 +2,7 @@ package dynamodbdao
 
 import (
 	"favorite-characters/src/domain"
-	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamoconfig"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"

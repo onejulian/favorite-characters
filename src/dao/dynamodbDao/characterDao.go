@@ -4,7 +4,7 @@ import (
 	"errors"
 	"favorite-characters/src/domain"
 	"favorite-characters/src/infraestructure/constants"
-	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamo"
+	dbconfig "favorite-characters/src/infraestructure/dbconfig/dynamoconfig"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"

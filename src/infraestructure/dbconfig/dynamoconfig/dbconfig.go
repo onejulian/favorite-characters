@@ -1,4 +1,4 @@
-package dbconfig
+package dynamoconfig
 
 import (
 	"os"
@@ -10,9 +10,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
 )
 
-var Client = initDynaClient()
+var Client dynamodbiface.DynamoDBAPI
 
-func initDynaClient() dynamodbiface.DynamoDBAPI {
+func InitDynaClient() {
 	region := os.Getenv("AWS_REGION")
 	is_local := os.Getenv("LOCAL")
 
@@ -28,8 +28,8 @@ func initDynaClient() dynamodbiface.DynamoDBAPI {
 
 	awsSession, err := session.NewSession(config)
 	if err != nil {
-		return nil
+		Client = nil
 	}
 
-	return dynamodb.New(awsSession)
+	Client = dynamodb.New(awsSession)
 }
