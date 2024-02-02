@@ -26,7 +26,7 @@ func (t *TokenDao) Create(token domain.Token) (*domain.Token, error) {
 }
 
 func (t *TokenDao) Delete(token domain.Token) error {
-	if result := t.db.Delete(&token); result.Error != nil {
+	if result := t.db.Where("user_email = ? AND value = ?", token.UserEmail, token.Value).Delete(&domain.Token{}); result.Error != nil {
 		return result.Error
 	}
 	return nil

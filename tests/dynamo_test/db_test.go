@@ -25,6 +25,26 @@ func TestCreateUser(t *testing.T) {
 	assert.Nil(err)
 }
 
+func TestLoginLogout(t *testing.T) {
+	assert := assert.New(t)
+
+	email := "usertest@mail.com"
+	password := "123456"
+
+	loginUsecase := usecase.LoginUseCase{}
+	resp, err := loginUsecase.Execute(email, password)
+
+	assert.Nil(err)
+	assert.NotNil(resp)
+
+	logoutUsecase := usecase.LogoutUseCase{}
+	token := domain.Token{Value: resp.Token, UserEmail: email}
+	code, err := logoutUsecase.Execute(token)
+
+	assert.Nil(err)
+	assert.Equal(200, code)
+}
+
 func TestDeleteUser(t *testing.T) {
 	assert := assert.New(t)
 
